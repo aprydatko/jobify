@@ -6,15 +6,30 @@ dotenv.config()
 import morgan from "morgan"
 import mongoose from "mongoose"
 import cookieParser from "cookie-parser"
+import cloudinary from "cloudinary"
 
 // routers
 import jobRouter from "./routers/jobRouter.js"
 import userRouter from "./routers/userRouter.js"
 import authRouter from "./routers/authRouter.js"
 
+// public
+import { dirname } from "path"
+import { fileURLToPath } from "url"
+import path from "path"
+
 // middleware
 import errorHandleMiddleware from "./middleware/errorHandleMiddleware.js"
 import { authenticateUser } from "./middleware/authMiddleware.js"
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+})
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+app.use(express.static(path.resolve(__dirname, "./public")))
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"))
