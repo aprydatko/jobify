@@ -24,7 +24,12 @@ const JobSchema = new mongoose.Schema(
       ref: "User",
     },
   },
-  { tymestamps: true }
+  {
+    timestamps: {
+      createdAt: "createdAt",
+      updatedAt: "updatedAt",
+    },
+  }
 )
 
 export default mongoose.model("Job", JobSchema)
